@@ -181,6 +181,8 @@ const MapUtil = {
         
     },
     addFarmland_empty(row, col) {
+        console.log('-------------------');
+        console.log('adding new farmland');
         var points = 0;
 
         const tiles = [
@@ -325,6 +327,7 @@ const MapView = {
         }
         if (structure.type === 'tree'){
             map[structure.originRow][structure.originCol].foreground = 'nothing';
+            map[structure.originRow][structure.originCol].structureNum = undefined;
             index = State.structures.indexOf(structure);
             
             State.structures.splice(index, 1);
