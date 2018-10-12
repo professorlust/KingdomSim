@@ -1,5 +1,6 @@
 const loadTextures = require('./src/peepTextures');
-const State = require('./src/state');
+const { remote } = require('electron');
+const State = remote.require('./src/state');
 
 document.addEventListener('DOMContentLoaded',() => {
     const peepTable = document.getElementById("peepList");

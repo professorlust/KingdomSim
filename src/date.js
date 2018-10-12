@@ -1,4 +1,5 @@
-const State = require('./state');
+const { remote } = require('electron');
+const State = remote.require('./src/state');
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -33,9 +34,7 @@ const DateView = {
         DateView.farming();
         DateView.treesGrow(MapView);
 
-        for (peep of State.peeps){
-            State.food -= 1;
-        }
+        State.food -= State.peeps.length;
         //add new peeps
         const peepSpots = State.countPeepSpots();
         

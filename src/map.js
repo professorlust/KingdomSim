@@ -1,5 +1,6 @@
 const loadTextures = require('./textures');
-const State = require('./state');
+const { remote } = require('electron');
+const State = remote.require('./src/state');
 
 const range = function range(n) {
     return [...Array(n).keys()];
