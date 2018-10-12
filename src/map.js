@@ -538,6 +538,19 @@ const MapView = {
                                 context.strokeStyle="rgb(200, 0, 0)";
                             }
                         }
+                        else {
+                            const tiles = MapUtil.newTiles(rows, cols, row, col);
+                            const isNothing = tile => tile.foreground==='nothing';
+                            const treeForegrounds = ['tree0', 'tree1', 'tree2', 'tree3'];
+                            const isTree = tile => treeForegrounds.includes(tile.foreground);
+                            const canBuildHere = tile => isNothing(tile) || isTree(tile);
+
+                            if (tiles.every(canBuildHere)){
+                            } else {
+                                context.strokeStyle="rgb(200, 0, 0)";
+                            }
+                        }
+
                         context.strokeRect(col * 32, row *32, (32 * cols), (32 * rows));
                     } else {
                         context.strokeRect(col * 32, row *32, 32, 32);
