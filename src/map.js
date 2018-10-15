@@ -80,7 +80,7 @@ const MapUtil = {
         document.getElementById("wood").innerHTML = `${State.wood}/${State.maxWood}`;
     },
     setFoodText(food) {   
-        document.getElementById("food").innerHTML = food;
+        document.getElementById("food").innerHTML = `${State.food}/${State.maxFood}`;
     },
     addStructure(tiles, texture, structureNum){
         const [origin, ...rest] = tiles;
@@ -240,6 +240,39 @@ const MapUtil = {
             State.wood -= woodRequired;
             MapUtil.setWoodText(State.wood, State.maxWood);
         }
+    },
+    addSmallBarn(row, col) {
+        var points = 10;
+        var woodRequired = 20;
+
+        const tiles = [
+            map[row][col],
+            map[row][col + 1],
+            map[row + 1][col],
+            map[row + 1][col + 1]
+        ]
+
+        const structureList = tiles.map(tile => State.findStructure(tile.structureNum));
+
+        for (const structure of structureList){
+            if (structure !== undefined && structure.type === 'tree'){
+                points += 5;
+                woodRequired -= 2;
+            }
+        }
+        if (State.wood >= woodRequired){
+            MapUtil.addStructure(tiles, 'smallBarn_con', structureNum);
+
+            State.structures.push({structureNum: structureNum, type: 'smallBarn_con', originRow: row, originCol: col, pointsLeft: points, pointsStart: points})
+            
+            State.buildingQueue.push({queueOrder: queueOrder, structure: structureNum})
+
+            queueOrder ++;
+            houseNum ++;        
+            structureNum ++;
+            State.wood -= woodRequired;
+            MapUtil.setWoodText(State.wood, State.maxWood);
+        }
     }
 }
 MapUtil.addMountain1_0(0,0);
@@ -326,6 +359,21 @@ const MapView = {
 
             MapView.render(mapCanvas);
         }
+        if (structure.type === 'smallBarn_con'){
+
+            map[structure.originRow][structure.originCol].foreground = 'smallBarn';
+            structure.type = 'smallBarn'
+            //storage push - probably can be separated into function
+            const maxWood = 0
+            const maxFood = 50
+            State.storages.push({structure: structureNum, maxWood: maxWood, curWood: 0, maxFood: maxFood, curFood: 0})
+            State.maxWood += maxWood;
+            State.maxFood += maxFood;
+
+            MapUtil.setFoodText(State.food, State.maxFood);
+
+            MapView.render(mapCanvas);
+        }
         if (structure.type === 'tree'){
             map[structure.originRow][structure.originCol].foreground = 'nothing';
             map[structure.originRow][structure.originCol].structureNum = undefined;
@@ -394,6 +442,12 @@ const MapView = {
                         MapUtil.addStockpileW(row, col);
                         MapView.render(canvas);
                         State.buildingChoice = undefined;
+                    } else {
+                        if (State.buildingChoice.type === 'smallBarn_con') {
+                            MapUtil.addSmallBarn(row, col);
+                            MapView.render(canvas);
+                            State.buildingChoice = undefined;
+                        }
                     }
                 }
             }
@@ -455,7 +509,7 @@ const MapView = {
             }
         }
 
-        if (type === 'house1_con' || type === 'stockpileW_con') {
+        if (type === 'house1_con' || type === 'stockpileW_con' || type === 'smallBarn_con') {
             const queueOrder = State.findQueueOrder(structure.structureNum).queueOrder;
 
             const peeps = State.findPeepsByJob('builder');

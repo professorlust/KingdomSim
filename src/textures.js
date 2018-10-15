@@ -41,6 +41,9 @@ const images = {
     farmland_4: 'buildings/farmland_4',
     farmland_dead: 'buildings/farmland_dead',
 
+    smallBarn: 'buildings/storage/smallBarn',
+    smallBarn_con: 'buildings/storage/smallBarn_con',
+
     stockpileW_con: 'buildings/storage/stockpileW_con',
     stockpileW_0: 'buildings/storage/stockpileW_0',
     stockpileW_1: 'buildings/storage/stockpileW_1',

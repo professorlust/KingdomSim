@@ -13,7 +13,8 @@ const IDs= [
     'alert',
     'buildChoiceHouse1',
     'buildChoiceFarmland',
-    'buildChoiceStockpileW'
+    'buildChoiceStockpileW',
+    'buildChoiceSmallBarn'
 ];
 
 const getElements = function getElements(elements, id) {

@@ -20,6 +20,10 @@ const BuildOptions = {
     chooseStockpileW() {
         console.log("clicked 'wood stockpile'");
         State.buildingChoice = {type: 'stockpileW_con', rows: 2, cols: 2};
+    },
+    chooseSmallBarn() {
+        console.log("clicked 'small barn'");
+        State.buildingChoice = {type: 'smallBarn_con', rows: 2, cols: 2};
     }
 }
 
