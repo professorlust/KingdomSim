@@ -1,6 +1,5 @@
 const loadTextures = require('./textures');
-const { remote } = require('electron');
-const State = remote.require('./src/state');
+const State = require('./state');
 
 const range = function range(n) {
     return [...Array(n).keys()];
@@ -365,7 +364,7 @@ const MapView = {
             structure.type = 'smallBarn'
             //storage push - probably can be separated into function
             const maxWood = 0
-            const maxFood = 50
+            const maxFood = 100
             State.storages.push({structure: structureNum, maxWood: maxWood, curWood: 0, maxFood: maxFood, curFood: 0})
             State.maxWood += maxWood;
             State.maxFood += maxFood;
@@ -580,7 +579,7 @@ const MapView = {
                 .then(textures => {
                     if (structure){
                         MapView.drawHovered(context, textures, structure);
-                    }                        
+                    }               
                     if (State.buildingChoice !== undefined){
                         rows = State.buildingChoice.rows
                         cols = State.buildingChoice.cols

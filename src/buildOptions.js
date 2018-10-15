@@ -1,11 +1,11 @@
-const { remote } = require('electron');
-const State = remote.require('./src/state');
+const State = require('./state');
 
 const BuildOptions = {
-    init(houseButton, farmButton, stockpileWButton) {
+    init(houseButton, farmButton, stockpileWButton, smallBarnButton) {
         houseButton.addEventListener('click', BuildOptions.chooseHouse);
         farmButton.addEventListener('click', BuildOptions.chooseFarm);
         stockpileWButton.addEventListener('click', BuildOptions.chooseStockpileW);
+        smallBarnButton.addEventListener('click', BuildOptions.chooseSmallBarn);
     },
 
     chooseHouse() {

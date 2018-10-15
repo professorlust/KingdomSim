@@ -1,5 +1,4 @@
-const { remote } = require('electron');
-const State = remote.require('./src/state');
+const State = require('./state');
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
